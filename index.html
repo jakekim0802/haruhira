@@ -8,13 +8,13 @@
 <title>하루히라 · 히라가나 낱말카드</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:#29242c;background:#faf7ef;color-scheme:light;line-height:1.5}
-*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible{outline:3px solid #704a70;outline-offset:3px}
+*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible{outline:3px solid #704a70;outline-offset:3px}.title-row{display:flex;align-items:center;gap:8px}.chart-btn{min-height:34px;padding:0 10px;border-radius:10px;font-size:12px;font-weight:700;color:#704a70;background:#fff;border:1px solid #d9cbd9}
 .app{max-width:520px;margin:auto;padding:24px 20px;padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(24px,env(safe-area-inset-bottom))}
 h1{margin:0;font-size:clamp(23px,6vw,30px);letter-spacing:-1px}.brand{color:#704a70}.muted{color:#6b626d;font-size:13px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.header{margin-bottom:24px}.header>div{flex-shrink:0}select{max-width:48%;height:46px;border-radius:12px;border:1px solid #d9d0c7;background:white;color:#29242c;padding:0 8px;font-size:14px}
 .bar{height:8px;background:#e9dfd7;border-radius:8px;overflow:hidden;margin:12px 0}.fill{height:100%;width:0;background:#704a70;transition:width .2s}
 .card{background:white;border:1px solid #e7ded3;border-radius:24px;text-align:center;padding:24px 12px 16px;margin:20px 0;box-shadow:0 10px 30px #00000009}.kana{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif;font-size:clamp(82px,23vw,110px);line-height:1.4;margin:10px 0;font-weight:500}.feedback{min-height:48px;font-size:16px;border-radius:12px;display:flex;flex-direction:column;justify-content:center;padding:8px}.feedback small{font-size:13px;margin-top:2px}.hint{color:#6b626d;font-size:14px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{min-height:60px;border:1px solid #e0d6cc;border-radius:16px;background:white;color:#29242c;font-size:21px;font-weight:700}button:disabled{cursor:default;opacity:1}.answer{position:relative;padding:12px 26px}.answer:disabled{color:#605665}.answer.correct{background:#e1f3e8;border:2px solid #347656;color:#205537}.answer.incorrect{background:#fce9e5;border:2px solid #b14439;color:#862a23}.mark{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px}
-.feedback.good{background:#e1f3e8;color:#205537}.feedback.bad{background:#fce9e5;color:#862a23}.next{width:100%;margin-top:14px;background:#704a70;border-color:#704a70;color:white;font-size:17px}.note{color:#6b626d;font-size:12px;line-height:1.7;margin:22px 4px 0}.hidden{display:none!important}.result{text-align:center;background:white;border:1px solid #e7ded3;padding:32px 22px;border-radius:24px}.result h2{font-size:52px;line-height:1.1;margin:24px 0 12px;color:#704a70}.result p{font-size:15px}.result button{width:100%;margin-top:12px;background:#704a70;color:white;font-size:17px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.feedback.good{background:#e1f3e8;color:#205537}.feedback.bad{background:#fce9e5;color:#862a23}.next{width:100%;margin-top:14px;background:#704a70;border-color:#704a70;color:white;font-size:17px}.note{color:#6b626d;font-size:12px;line-height:1.7;margin:22px 4px 0}.hidden{display:none!important}.result{text-align:center;background:white;border:1px solid #e7ded3;padding:32px 22px;border-radius:24px}.result h2{font-size:52px;line-height:1.1;margin:24px 0 12px;color:#704a70}.result p{font-size:15px}.result button{width:100%;margin-top:12px;background:#704a70;color:white;font-size:17px}.modal{border:0;padding:0;background:transparent;width:min(92vw,520px);max-height:88vh}.modal::backdrop{background:#1f172080;backdrop-filter:blur(3px)}.modal-box{background:#fffaf4;border-radius:22px;padding:18px;max-height:88vh;overflow:auto;box-shadow:0 20px 60px #0003}.modal-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:-18px;background:#fffaf4;padding:4px 0 12px;z-index:2}.modal-head h2{margin:0;font-size:20px}.close-btn{min-height:38px;width:38px;padding:0;border-radius:50%;font-size:20px}.chart-section{margin:8px 0 20px}.chart-section h3{font-size:14px;margin:0 0 8px;color:#704a70}.kana-chart{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.kana-chart.youon{grid-template-columns:repeat(3,1fr)}.kana-cell{background:white;border:1px solid #e8ddd3;border-radius:10px;padding:7px 2px;text-align:center;min-width:0}.kana-cell b{display:block;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:22px;line-height:1.2}.kana-cell span{display:block;font-size:10px;color:#6b626d;margin-top:3px}.chart-note{font-size:11px;color:#6b626d}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:350px){.app{padding-left:14px;padding-right:14px}.header{gap:6px}select{font-size:12px}h1{font-size:23px}.card{padding-top:18px;margin:16px 0}.header{margin-bottom:20px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -22,7 +22,7 @@ h1{margin:0;font-size:clamp(23px,6vw,30px);letter-spacing:-1px}.brand{color:#704
 <body>
 <main class="app">
   <header class="top header">
-    <div><h1><span class="brand" lang="ja">ひ</span> 하루히라</h1><div class="muted">히라가나 낱말카드</div></div>
+    <div><div class="title-row"><h1><span class="brand" lang="ja">ひ</span> 하루히라</h1><button id="chart-open" class="chart-btn" type="button" aria-haspopup="dialog">전체표</button></div><div class="muted">히라가나 낱말카드</div></div>
     <label for="pool" class="sr-only">연습할 글자 범위</label>
     <select id="pool">
       <option value="basic">기본 46자</option>
@@ -31,7 +31,7 @@ h1{margin:0;font-size:clamp(23px,6vw,30px);letter-spacing:-1px}.brand{color:#704
       <option value="all">전체 104자</option>
     </select>
   </header>
-  <noscript><p>이 앱은 JavaScript가 필요합니다. 파일 미리보기 대신 배포된 웹사이트를 Safari 또는 Chrome에서 열어 주세요.</p></noscript>
+  <dialog id="chart-modal" class="modal"><div class="modal-box"><div class="modal-head"><h2>전체 히라가나</h2><button id="chart-close" class="close-btn" type="button" aria-label="닫기">×</button></div><div id="chart-content"></div><p class="chart-note">한글 표기는 암기를 돕기 위한 근사 발음입니다.</p></div></dialog>\n  <noscript><p>이 앱은 JavaScript가 필요합니다. 파일 미리보기 대신 배포된 웹사이트를 Safari 또는 Chrome에서 열어 주세요.</p></noscript>
   <section id="quiz" aria-label="히라가나 퀴즈">
     <div class="top"><b id="count"></b><span id="score" class="muted"></span></div>
     <div id="progress" class="bar" role="progressbar" aria-label="라운드 진행률" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="fill" class="fill"></div></div>
@@ -58,6 +58,20 @@ const basic=P('あ:아,い:이,う:우,え:에,お:오,か:카,き:키,く:쿠,�
 const voiced=P('が:가,ぎ:기,ぐ:구,げ:게,ご:고,ざ:자,じ:지,ず:즈,ぜ:제,ぞ:조,だ:다,ぢ:지,づ:즈,で:데,ど:도,ば:바,び:비,ぶ:부,べ:베,ぼ:보,ぱ:파,ぴ:피,ぷ:푸,ぺ:페,ぽ:포');
 const youon=P('きゃ:캬,きゅ:큐,きょ:쿄,しゃ:샤,しゅ:슈,しょ:쇼,ちゃ:차,ちゅ:추,ちょ:초,にゃ:냐,にゅ:뉴,にょ:뇨,ひゃ:햐,ひゅ:휴,ひょ:효,みゃ:먀,みゅ:뮤,みょ:묘,りゃ:랴,りゅ:류,りょ:료,ぎゃ:갸,ぎゅ:규,ぎょ:교,じゃ:자,じゅ:주,じょ:조,びゃ:뱌,びゅ:뷰,びょ:뵤,ぴゃ:퍄,ぴゅ:퓨,ぴょ:표');
 const sets = {basic,voiced,youon,all:[...basic,...voiced,...youon]};
+function renderChart(){
+  const target=document.getElementById('chart-content'); target.replaceChildren();
+  [['기본 46자',basic,''],['탁음·반탁음 25자',voiced,''],['요음 33자',youon,'youon']].forEach(([title,data,cls])=>{
+    const section=document.createElement('section'); section.className='chart-section';
+    const h=document.createElement('h3'); h.textContent=title;
+    const grid=document.createElement('div'); grid.className='kana-chart '+cls;
+    data.forEach(x=>{const cell=document.createElement('div');cell.className='kana-cell';const k=document.createElement('b');k.lang='ja';k.textContent=x.k;const r=document.createElement('span');r.textContent=x.r;cell.append(k,r);grid.appendChild(cell)});
+    section.append(h,grid); target.appendChild(section);
+  });
+}
+const chartModal=document.getElementById('chart-modal');
+document.getElementById('chart-open').addEventListener('click',()=>{renderChart();chartModal.showModal()});
+document.getElementById('chart-close').addEventListener('click',()=>chartModal.close());
+chartModal.addEventListener('click',e=>{if(e.target===chartModal)chartModal.close()});
 const $ = id => document.getElementById(id);
 const ui = Object.fromEntries(['pool','quiz','result','count','score','progress','fill','kana','feedback','answers','next','restart','result-score','result-message'].map(id=>[id,$(id)]));
 let questions = [], index = 0, selected = null, correct = 0, streak = 0, bestStreak = 0;
