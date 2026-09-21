@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#704a70">
+<meta name="description" content="하루 10문제, 히라가나를 한국어 발음 4지선다로 익히는 하루히라.">
+<title>하루히라 · 히라가나 낱말카드</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:#29242c;background:#faf7ef;color-scheme:light;line-height:1.5}
+*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible{outline:3px solid #704a70;outline-offset:3px}
+.app{max-width:520px;margin:auto;padding:24px 20px;padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(24px,env(safe-area-inset-bottom))}
+h1{margin:0;font-size:clamp(23px,6vw,30px);letter-spacing:-1px}.brand{color:#704a70}.muted{color:#6b626d;font-size:13px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.header{margin-bottom:24px}.header>div{flex-shrink:0}select{max-width:48%;height:46px;border-radius:12px;border:1px solid #d9d0c7;background:white;color:#29242c;padding:0 8px;font-size:14px}
+.bar{height:8px;background:#e9dfd7;border-radius:8px;overflow:hidden;margin:12px 0}.fill{height:100%;width:0;background:#704a70;transition:width .2s}
+.card{background:white;border:1px solid #e7ded3;border-radius:24px;text-align:center;padding:24px 12px 16px;margin:20px 0;box-shadow:0 10px 30px #00000009}.kana{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif;font-size:clamp(82px,23vw,110px);line-height:1.4;margin:10px 0;font-weight:500}.feedback{min-height:48px;font-size:16px;border-radius:12px;display:flex;flex-direction:column;justify-content:center;padding:8px}.feedback small{font-size:13px;margin-top:2px}.hint{color:#6b626d;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{min-height:60px;border:1px solid #e0d6cc;border-radius:16px;background:white;color:#29242c;font-size:21px;font-weight:700}button:disabled{cursor:default;opacity:1}.answer{position:relative;padding:12px 26px}.answer:disabled{color:#605665}.answer.correct{background:#e1f3e8;border:2px solid #347656;color:#205537}.answer.incorrect{background:#fce9e5;border:2px solid #b14439;color:#862a23}.mark{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px}
+.feedback.good{background:#e1f3e8;color:#205537}.feedback.bad{background:#fce9e5;color:#862a23}.next{width:100%;margin-top:14px;background:#704a70;border-color:#704a70;color:white;font-size:17px}.note{color:#6b626d;font-size:12px;line-height:1.7;margin:22px 4px 0}.hidden{display:none!important}.result{text-align:center;background:white;border:1px solid #e7ded3;padding:32px 22px;border-radius:24px}.result h2{font-size:52px;line-height:1.1;margin:24px 0 12px;color:#704a70}.result p{font-size:15px}.result button{width:100%;margin-top:12px;background:#704a70;color:white;font-size:17px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:350px){.app{padding-left:14px;padding-right:14px}.header{gap:6px}select{font-size:12px}h1{font-size:23px}.card{padding-top:18px;margin:16px 0}.header{margin-bottom:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top header">
+    <div><h1><span class="brand" lang="ja">ひ</span> 하루히라</h1><div class="muted">히라가나 낱말카드</div></div>
+    <label for="pool" class="sr-only">연습할 글자 범위</label>
+    <select id="pool">
+      <option value="basic">기본 46자</option>
+      <option value="voiced">탁음·반탁음 25자</option>
+      <option value="youon">요음 33자</option>
+      <option value="all">전체 104자</option>
+    </select>
+  </header>
+  <noscript><p>이 앱은 JavaScript가 필요합니다. 파일 미리보기 대신 배포된 웹사이트를 Safari 또는 Chrome에서 열어 주세요.</p></noscript>
+  <section id="quiz" aria-label="히라가나 퀴즈">
+    <div class="top"><b id="count"></b><span id="score" class="muted"></span></div>
+    <div id="progress" class="bar" role="progressbar" aria-label="라운드 진행률" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="fill" class="fill"></div></div>
+    <div class="card">
+      <div class="muted">이 글자는 어떻게 읽을까요?</div>
+      <div id="kana" class="kana" lang="ja" tabindex="-1"></div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div>
+    <div id="answers" class="grid" role="group" aria-label="한국어 발음 보기 네 개"></div>
+    <button id="next" class="next hidden" type="button">다음 카드 →</button>
+  </section>
+  <section id="result" class="result hidden" aria-label="라운드 결과">
+    <div class="muted">오늘도 한 걸음 더!</div>
+    <h2 id="result-score" tabindex="-1"></h2>
+    <p id="result-message"></p>
+    <button id="restart" type="button">한 번 더 연습</button>
+  </section>
+  <p class="note">한글 발음은 암기를 돕는 근사 표기입니다. 실제 일본어 발음과 차이가 있으며, は·へ는 조사로 쓰일 때 읽기가 달라집니다.</p>
+</main>
+<script>
+'use strict';
+const P = s => s.split(',').map(v => { const [k,r] = v.split(':'); return {k,r}; });
+const basic=P('あ:아,い:이,う:우,え:에,お:오,か:카,き:키,く:쿠,け:케,こ:코,さ:사,し:시,す:스,せ:세,そ:소,た:타,ち:치,つ:츠,て:테,と:토,な:나,に:니,ぬ:누,ね:네,の:노,は:하,ひ:히,ふ:후,へ:헤,ほ:호,ま:마,み:미,む:무,め:메,も:모,や:야,ゆ:유,よ:요,ら:라,り:리,る:루,れ:레,ろ:로,わ:와,を:오,ん:응');
+const voiced=P('が:가,ぎ:기,ぐ:구,げ:게,ご:고,ざ:자,じ:지,ず:즈,ぜ:제,ぞ:조,だ:다,ぢ:지,づ:즈,で:데,ど:도,ば:바,び:비,ぶ:부,べ:베,ぼ:보,ぱ:파,ぴ:피,ぷ:푸,ぺ:페,ぽ:포');
+const youon=P('きゃ:캬,きゅ:큐,きょ:쿄,しゃ:샤,しゅ:슈,しょ:쇼,ちゃ:차,ちゅ:추,ちょ:초,にゃ:냐,にゅ:뉴,にょ:뇨,ひゃ:햐,ひゅ:휴,ひょ:효,みゃ:먀,みゅ:뮤,みょ:묘,りゃ:랴,りゅ:류,りょ:료,ぎゃ:갸,ぎゅ:규,ぎょ:교,じゃ:자,じゅ:주,じょ:조,びゃ:뱌,びゅ:뷰,びょ:뵤,ぴゃ:퍄,ぴゅ:퓨,ぴょ:표');
+const sets = {basic,voiced,youon,all:[...basic,...voiced,...youon]};
+const $ = id => document.getElementById(id);
+const ui = Object.fromEntries(['pool','quiz','result','count','score','progress','fill','kana','feedback','answers','next','restart','result-score','result-message'].map(id=>[id,$(id)]));
+let questions = [], index = 0, selected = null, correct = 0, streak = 0, bestStreak = 0;
+function shuffle(items) {
+  const a = [...items];
+  for (let i=a.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function makeOptions(q,pool) {
+  const distractors = [...new Set(pool.map(x=>x.r))].filter(r=>r!==q.r);
+  return shuffle([q.r,...shuffle(distractors).slice(0,3)]);
+}
+function setProgress(answered) {
+  ui.fill.style.width = `${answered/questions.length*100}%`;
+  ui.progress.setAttribute('aria-valuenow',String(answered));
+  ui.progress.setAttribute('aria-valuemax',String(questions.length));
+}
+function setScore() { ui.score.textContent = `정답 ${correct} · 연속 ${streak}`; }
+function start() {
+  const pool = sets[ui.pool.value] || sets.basic;
+  questions = shuffle(pool).slice(0,10).map(q=>({...q,options:makeOptions(q,pool)}));
+  index=correct=streak=bestStreak=0; selected=null;
+  ui.quiz.classList.remove('hidden'); ui.result.classList.add('hidden');
+  draw();
+}
+function draw() {
+  const q=questions[index];
+  ui.count.textContent=`${index+1} / ${questions.length}`;
+  setScore(); setProgress(index);
+  ui.kana.textContent=q.k;
+  ui.feedback.className='feedback hint';
+  ui.feedback.textContent='아래에서 알맞은 발음을 골라 주세요.';
+  ui.answers.replaceChildren();
+  ui.next.classList.add('hidden');
+  ui.next.textContent=index===questions.length-1?'결과 보기 →':'다음 카드 →';
+  q.options.forEach(reading=>{
+    const button=document.createElement('button');
+    button.type='button'; button.className='answer'; button.textContent=reading;
+    button.dataset.reading=reading;
+    button.addEventListener('click',()=>pick(reading));
+    ui.answers.appendChild(button);
+  });
+}
+function pick(reading) {
+  if(selected!==null) return;
+  const q=questions[index];
+  if(!q || !q.options.includes(reading)) return;
+  selected=reading;
+  const good=reading===q.r;
+  if(good){correct++;streak++;bestStreak=Math.max(bestStreak,streak);}else streak=0;
+  for(const button of ui.answers.children){
+    button.disabled=true;
+    const value=button.dataset.reading;
+    if(value===q.r || value===reading){
+      const right=value===q.r;
+      button.classList.add(right?'correct':'incorrect');
+      button.setAttribute('aria-label',`${value}, ${right?'정답':'선택한 오답'}`);
+      const mark=document.createElement('span'); mark.className='mark'; mark.setAttribute('aria-hidden','true'); mark.textContent=right?'✓':'×';button.appendChild(mark);
+    }
+  }
+  ui.feedback.className=`feedback ${good?'good':'bad'}`;
+  const title=document.createElement('strong'); title.textContent=good?'정답이에요!':`아쉬워요. 정답은 “${q.r}”예요.`;
+  const detail=document.createElement('small'); detail.textContent=`${q.k} → ${q.r}`;
+  ui.feedback.replaceChildren(title,detail);
+  ui.next.classList.remove('hidden'); setScore();setProgress(index+1);
+}
+ui.next.addEventListener('click',()=>{
+  if(selected===null) return;
+  index++;
+  if(index>=questions.length){
+    ui.quiz.classList.add('hidden'); ui.result.classList.remove('hidden');
+    ui['result-score'].textContent=`${correct} / ${questions.length}`;
+    ui['result-message'].textContent=`정답률 ${Math.round(correct/questions.length*100)}% · 최고 연속 정답 ${bestStreak}개`;
+    ui['result-score'].focus();
+  }else{
+    selected=null;draw();ui.kana.focus({preventScroll:true});
+  }
+});
+ui.restart.addEventListener('click',()=>{start();ui.kana.focus({preventScroll:true});});
+ui.pool.addEventListener('change',start);
+start();
+</script>
+</body>
+</html>
